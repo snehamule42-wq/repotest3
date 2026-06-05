@@ -1,1 +1,25 @@
 
+name: Python application
+on: 
+    push:
+        branches:
+            - main
+
+jobs:
+    CI-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: installing dependecy
+              run: pip install -r req.txt
+            - name: Run tests
+              run: pytest --cov=calc --cov-report=term
+    CD-job:
+        needs: CI-job
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Deploy code
+              run: echo "Deploying code..."
